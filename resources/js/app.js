@@ -22,14 +22,14 @@ const routes = [
     },
 ];
 
-import VueAxios from "vue-axios";
-import axios from "axios";
-
 import { createWebHistory, createRouter } from "vue-router";
 const router = createRouter({
     history: createWebHistory(),
     routes,
 });
+
+import VueAxios from "vue-axios";
+import axios from "axios";
 
 import EventForm from "./vue/event-form.vue";
 

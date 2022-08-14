@@ -6,7 +6,7 @@
                     <event-form :event="event"></event-form>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary">
-                            Update Event
+                            Update event
                         </button>
                     </div>
                 </form>
@@ -31,10 +31,13 @@ export default {
     },
     methods: {
         updateEvent() {
-            this.axios.put(
-                `http://localhost/api/event/${this.$route.params.id}`,
-                this.event
-            );
+            this.axios
+                .put(
+                    `http://localhost/api/event/${this.$route.params.id}`,
+                    this.event
+                )
+                .then((response) => alert(response.data.message))
+                .catch((error) => console.log(error));
         },
     },
 };

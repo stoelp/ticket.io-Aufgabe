@@ -21,7 +21,7 @@ class EventController extends Controller
 
     public function store(EventRequest $request)
     {
-        $event = Event::create($request->all());
+        $event = Event::create($request->except('tickets'));
         $this->saveTickets($request, $event);
         return response()->json([
             'status' => true,
@@ -32,7 +32,7 @@ class EventController extends Controller
 
     public function update(EventRequest $request, Event $event)
     {
-        $event->update($request->all());
+        $event->update($request->except('tickets'));
         $this->saveTickets($request, $event);
         return response()->json([
             'status' => true,

@@ -56,7 +56,9 @@ export default {
                 .then((response) => {
                     let i = this.events.map((event) => event.id).indexOf(id);
                     this.events.splice(i, 1);
-                });
+                    alert(response.data.message);
+                })
+                .catch((error) => console.log(error));
         },
     },
 };
