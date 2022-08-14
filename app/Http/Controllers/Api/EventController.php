@@ -22,7 +22,12 @@ class EventController extends Controller
     public function store(EventRequest $request)
     {
         $event = Event::create($request->except('tickets'));
-        $this->saveTickets($request, $event);
+        $tickets = [];
+        foreach ($request->get('tickets') as $ticket) {
+            $tickets[] = new Ticket($ticket);
+        }
+        $event->tickets()->saveMany($tickets);
+        $event->load('tickets');
         return response()->json([
             'status' => true,
             'message' => 'Event saved successfully!',
@@ -33,7 +38,17 @@ class EventController extends Controller
     public function update(EventRequest $request, Event $event)
     {
         $event->update($request->except('tickets'));
-        $this->saveTickets($request, $event);
+        if ($request->get('tickets')) {
+            $ids = [];
+            foreach ($request->get('tickets') as $ticket) {
+                $newTicket = $event->tickets()->updateOrCreate($ticket);
+                $ids[] = $newTicket['id'];
+            }
+            Ticket::whereNotIn('id', $ids)->where('event_id', '=', $event['id'])->delete();
+        } else {
+            $event->tickets()->delete();
+        }
+        $event->load('tickets');
         return response()->json([
             'status' => true,
             'message' => 'Event updated successfully!',
@@ -61,17 +76,5 @@ class EventController extends Controller
             'message' => 'Event loaded successfully!',
             'event' => $event
         ], 200);
-    }
-
-    private function saveTickets(EventRequest $request, Event $event)
-    {
-        if ($request->get('tickets')) {
-            $tickets = [];
-            foreach ($request->get('tickets') as $ticket) {
-                $tickets[] = new Ticket($ticket);
-            }
-            $event->tickets()->saveMany($tickets);
-            $event->load('tickets');
-        }
     }
 }

@@ -20,11 +20,11 @@
                         <div class="btn-group" role="group">
                             <router-link
                                 :to="{ name: 'edit', params: { id: event.id } }"
-                                class="btn btn-primary"
+                                class="btn btn-outline-primary"
                                 >Edit
                             </router-link>
                             <button
-                                class="btn btn-danger"
+                                class="btn btn-outline-danger"
                                 @click="deleteEvent(event.id)"
                             >
                                 Delete
@@ -54,8 +54,10 @@ export default {
             this.axios
                 .delete(`http://localhost/api/event/${id}`)
                 .then((response) => {
-                    let i = this.events.map((event) => event.id).indexOf(id);
-                    this.events.splice(i, 1);
+                    let index = this.events
+                        .map((event) => event.id)
+                        .indexOf(id);
+                    this.events.splice(index, 1);
                     alert(response.data.message);
                 })
                 .catch((error) => console.log(error));

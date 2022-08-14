@@ -19760,8 +19760,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     createEvent: function createEvent() {
+      var _this = this;
+
       this.axios.post("http://localhost/api/event", this.event).then(function (response) {
-        return alert(response.data.message);
+        _this.event = response.data.event;
+        alert(response.data.message);
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -19797,8 +19800,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     updateEvent: function updateEvent() {
+      var _this2 = this;
+
       this.axios.put("http://localhost/api/event/".concat(this.$route.params.id), this.event).then(function (response) {
-        return alert(response.data.message);
+        _this2.event = response.data.event;
+        alert(response.data.message);
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -19829,6 +19835,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     addTicket: function addTicket() {
       this.event.tickets.push({});
+    },
+    removeTicket: function removeTicket(index) {
+      this.event.tickets.splice(index, 1);
     }
   }
 });
@@ -19864,11 +19873,11 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.axios["delete"]("http://localhost/api/event/".concat(id)).then(function (response) {
-        var i = _this2.events.map(function (event) {
+        var index = _this2.events.map(function (event) {
           return event.id;
         }).indexOf(id);
 
-        _this2.events.splice(i, 1);
+        _this2.events.splice(index, 1);
 
         alert(response.data.message);
       })["catch"](function (error) {
@@ -19968,7 +19977,7 @@ var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   "class": "d-flex justify-content-end"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "submit",
-  "class": "btn btn-primary"
+  "class": "btn btn-outline-primary"
 }, " Create event ")], -1
 /* HOISTED */
 );
@@ -20015,7 +20024,7 @@ var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   "class": "d-flex justify-content-end"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "submit",
-  "class": "btn btn-primary"
+  "class": "btn btn-outline-primary"
 }, " Update event ")], -1
 /* HOISTED */
 );
@@ -20083,38 +20092,42 @@ var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 var _hoisted_8 = {
   "class": "tickets"
 };
+var _hoisted_9 = {
+  "class": "d-flex flex-row"
+};
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", null, "Ticket", -1
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", null, "Ticket", -1
 /* HOISTED */
 );
 
-var _hoisted_10 = {
+var _hoisted_11 = ["onClick"];
+var _hoisted_12 = {
   "class": "form-group"
 };
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Barcode", -1
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Barcode", -1
 /* HOISTED */
 );
 
-var _hoisted_12 = ["onUpdate:modelValue"];
-var _hoisted_13 = {
+var _hoisted_14 = ["onUpdate:modelValue"];
+var _hoisted_15 = {
   "class": "form-group"
 };
 
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "First name", -1
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "First name", -1
 /* HOISTED */
 );
 
-var _hoisted_15 = ["onUpdate:modelValue"];
-var _hoisted_16 = {
+var _hoisted_17 = ["onUpdate:modelValue"];
+var _hoisted_18 = {
   "class": "form-group"
 };
 
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Last name", -1
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Last name", -1
 /* HOISTED */
 );
 
-var _hoisted_18 = ["onUpdate:modelValue"];
+var _hoisted_20 = ["onUpdate:modelValue"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
@@ -20143,10 +20156,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.event.eventCity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.event.tickets, function (ticket) {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.event.eventCity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.event.tickets, function (ticket, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: ticket.id
-    }, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      "class": "btn btn-outline-danger btn-sm",
+      onClick: function onClick($event) {
+        return $options.removeTicket(index);
+      }
+    }, " X ", 8
+    /* PROPS */
+    , _hoisted_11)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       type: "text",
       "class": "form-control",
       pattern: "^[a-zA-Z0-9]*$",
@@ -20157,7 +20177,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }
     }, null, 8
     /* PROPS */
-    , _hoisted_12), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, ticket.barcode]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    , _hoisted_14), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, ticket.barcode]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       type: "text",
       "class": "form-control",
       required: "",
@@ -20166,7 +20186,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }
     }, null, 8
     /* PROPS */
-    , _hoisted_15), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, ticket.firstName]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    , _hoisted_17), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, ticket.firstName]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       type: "text",
       "class": "form-control",
       required: "",
@@ -20175,12 +20195,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }
     }, null, 8
     /* PROPS */
-    , _hoisted_18), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, ticket.lastName]])])]);
+    , _hoisted_20), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, ticket.lastName]])])]);
   }), 128
   /* KEYED_FRAGMENT */
   )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
-    "class": "btn btn-primary",
+    "class": "btn btn-outline-primary",
     onClick: _cache[3] || (_cache[3] = function ($event) {
       return $options.addTicket();
     })
@@ -20246,7 +20266,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           id: event.id
         }
       },
-      "class": "btn btn-primary"
+      "class": "btn btn-outline-primary"
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
         return [_hoisted_5];
@@ -20257,7 +20277,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, 1032
     /* PROPS, DYNAMIC_SLOTS */
     , ["to"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-      "class": "btn btn-danger",
+      "class": "btn btn-outline-danger",
       onClick: function onClick($event) {
         return $options.deleteEvent(event.id);
       }
@@ -20393,7 +20413,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.tickets {\n    margin-bottom: 10px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.tickets {\n    margin-bottom: 10px;\n}\nh5 {\n    padding-right: 5px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

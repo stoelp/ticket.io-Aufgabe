@@ -5,7 +5,7 @@
                 <form @submit.prevent="updateEvent">
                     <event-form :event="event"></event-form>
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-outline-primary">
                             Update event
                         </button>
                     </div>
@@ -36,7 +36,10 @@ export default {
                     `http://localhost/api/event/${this.$route.params.id}`,
                     this.event
                 )
-                .then((response) => alert(response.data.message))
+                .then((response) => {
+                    this.event = response.data.event;
+                    alert(response.data.message);
+                })
                 .catch((error) => console.log(error));
         },
     },

@@ -5,7 +5,7 @@
                 <form @submit.prevent="createEvent">
                     <event-form :event="event"></event-form>
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-outline-primary">
                             Create event
                         </button>
                     </div>
@@ -28,7 +28,10 @@ export default {
         createEvent() {
             this.axios
                 .post("http://localhost/api/event", this.event)
-                .then((response) => alert(response.data.message))
+                .then((response) => {
+                    this.event = response.data.event;
+                    alert(response.data.message);
+                })
                 .catch((error) => console.log(error));
         },
     },

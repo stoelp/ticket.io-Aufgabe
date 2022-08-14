@@ -29,8 +29,16 @@
             />
         </div>
         <div class="tickets">
-            <div v-for="ticket in event.tickets" :key="ticket.id">
-                <h5>Ticket</h5>
+            <div v-for="(ticket, index) in event.tickets" :key="ticket.id">
+                <div class="d-flex flex-row">
+                    <h5>Ticket</h5>
+                    <button
+                        class="btn btn-outline-danger btn-sm"
+                        @click="removeTicket(index)"
+                    >
+                        X
+                    </button>
+                </div>
                 <div class="form-group">
                     <label>Barcode</label>
                     <input
@@ -61,7 +69,11 @@
                     />
                 </div>
             </div>
-            <button type="button" class="btn btn-primary" @click="addTicket()">
+            <button
+                type="button"
+                class="btn btn-outline-primary"
+                @click="addTicket()"
+            >
                 Add ticket
             </button>
         </div>
@@ -80,6 +92,9 @@ export default {
         addTicket() {
             this.event.tickets.push({});
         },
+        removeTicket(index) {
+            this.event.tickets.splice(index, 1);
+        },
     },
 };
 </script>
@@ -87,5 +102,9 @@ export default {
 <style>
 .tickets {
     margin-bottom: 10px;
+}
+
+h5 {
+    padding-right: 5px;
 }
 </style>
