@@ -24,21 +24,18 @@ Route::post('event', [EventController::class, 'store']);
 Route::put('event/{event}', [EventController::class, 'update'])
     ->missing(function() {
         return response()->json([
-            'status' => false,
             'message' => "Event not found!"
         ], 404);
     });
 Route::delete('event/{event}', [EventController::class, 'destroy'])
     ->missing(function() {
         return response()->json([
-            'status' => false,
             'message' => "Event not found!"
         ], 404);
     });
 Route::get('event/{event}', [EventController::class, 'show'])
     ->missing(function() {
         return response()->json([
-            'status' => false,
             'message' => "Event not found!"
         ], 404);
     });
