@@ -13,7 +13,6 @@ class EventController extends Controller
     {
         $events = Event::with('tickets')->get();
         return response()->json([
-            'status' => true,
             'message' => 'Events loaded successfully!',
             'events' => $events
         ], 200);
@@ -26,10 +25,11 @@ class EventController extends Controller
         foreach ($request->get('tickets') as $ticket) {
             $tickets[] = new Ticket($ticket);
         }
-        $event->tickets()->saveMany($tickets);
+        $event
+            ->tickets()
+            ->saveMany($tickets);
         $event->load('tickets');
         return response()->json([
-            'status' => true,
             'message' => 'Event saved successfully!',
             'event' => $event
         ], 200);
@@ -41,16 +41,19 @@ class EventController extends Controller
         if ($request->get('tickets')) {
             $ids = [];
             foreach ($request->get('tickets') as $ticket) {
-                $newTicket = $event->tickets()->updateOrCreate($ticket);
+                $newTicket = $event
+                    ->tickets()
+                    ->updateOrCreate($ticket);
                 $ids[] = $newTicket['id'];
             }
-            Ticket::whereNotIn('id', $ids)->where('event_id', '=', $event['id'])->delete();
+            Ticket::whereNotIn('id', $ids)
+                ->where('event_id', '=', $event['id'])
+                ->delete();
         } else {
             $event->tickets()->delete();
         }
         $event->load('tickets');
         return response()->json([
-            'status' => true,
             'message' => 'Event updated successfully!',
             'event' => $event
         ], 200);
@@ -63,7 +66,6 @@ class EventController extends Controller
         }
         $event->delete();
         return response()->json([
-            'status' => true,
             'message' => 'Event deleted successfully!'
         ], 200);
     }
@@ -72,7 +74,6 @@ class EventController extends Controller
     {
         $event->load('tickets');
         return response()->json([
-            'status' => true,
             'message' => 'Event loaded successfully!',
             'event' => $event
         ], 200);

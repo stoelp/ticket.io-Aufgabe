@@ -30,8 +30,8 @@
         </div>
         <div class="tickets">
             <div v-for="(ticket, index) in event.tickets" :key="ticket.id">
-                <div class="d-flex flex-row">
-                    <h5>Ticket</h5>
+                <div class="vertical-center">
+                    <h5 class="headline">Ticket</h5>
                     <button
                         class="btn btn-outline-danger btn-sm"
                         @click="removeTicket(index)"
@@ -39,6 +39,7 @@
                         X
                     </button>
                 </div>
+
                 <div class="form-group">
                     <label>Barcode</label>
                     <input
@@ -104,7 +105,13 @@ export default {
     margin-bottom: 10px;
 }
 
-h5 {
+.vertical-center {
+    display: flex;
+    align-items: center;
+}
+
+.headline {
     padding-right: 5px;
+    margin-bottom: 0;
 }
 </style>

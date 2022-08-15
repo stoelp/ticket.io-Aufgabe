@@ -1,39 +1,35 @@
 require("./bootstrap");
 
 import App from "./vue/app.vue";
-import List from "./vue/list.vue";
-import Create from "./vue/create.vue";
-import Edit from "./vue/edit.vue";
+import EventForm from "./vue/event-form.vue";
+import { createWebHistory, createRouter } from "vue-router";
+import VueAxios from "vue-axios";
+import axios from "axios";
+import { createApp, defineAsyncComponent } from "vue";
+
 const routes = [
     {
         name: "home",
         path: "/",
-        component: List,
+        component: defineAsyncComponent(() => import("./vue/list.vue")),
     },
     {
         name: "create",
         path: "/create",
-        component: Create,
+        component: defineAsyncComponent(() => import("./vue/create.vue")),
     },
     {
         name: "edit",
         path: "/edit/:id",
-        component: Edit,
+        component: defineAsyncComponent(() => import("./vue/edit.vue")),
     },
 ];
 
-import { createWebHistory, createRouter } from "vue-router";
 const router = createRouter({
     history: createWebHistory(),
     routes,
 });
 
-import VueAxios from "vue-axios";
-import axios from "axios";
-
-import EventForm from "./vue/event-form.vue";
-
-import { createApp } from "vue";
 createApp(App)
     .use(router)
     .use(VueAxios, axios)
