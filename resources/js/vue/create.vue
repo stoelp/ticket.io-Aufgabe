@@ -27,7 +27,7 @@ export default {
     methods: {
         createEvent() {
             this.axios
-                .post("http://localhost/api/event", this.event)
+                .post(`/api/event`, this.event)
                 .then((response) => {
                     this.event = response.data.event;
                     alert(response.data.message);

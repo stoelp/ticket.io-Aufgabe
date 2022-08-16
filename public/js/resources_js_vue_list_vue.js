@@ -20,7 +20,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    this.axios.get("http://localhost/api/event").then(function (response) {
+    this.axios.get("/api/event").then(function (response) {
       _this.events = response.data.events;
     });
   },
@@ -28,7 +28,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteEvent: function deleteEvent(id) {
       var _this2 = this;
 
-      this.axios["delete"]("http://localhost/api/event/".concat(id)).then(function (response) {
+      this.axios["delete"]("/api/event/".concat(id)).then(function (response) {
         var index = _this2.events.map(function (event) {
           return event.id;
         }).indexOf(id);

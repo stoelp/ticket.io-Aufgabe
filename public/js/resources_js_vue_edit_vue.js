@@ -20,7 +20,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    this.axios.get("http://localhost/api/event/".concat(this.$route.params.id)).then(function (response) {
+    this.axios.get("/api/event/".concat(this.$route.params.id)).then(function (response) {
       _this.event = response.data.event;
     });
   },
@@ -28,7 +28,7 @@ __webpack_require__.r(__webpack_exports__);
     updateEvent: function updateEvent() {
       var _this2 = this;
 
-      this.axios.put("http://localhost/api/event/".concat(this.$route.params.id), this.event).then(function (response) {
+      this.axios.put("/api/event/".concat(this.$route.params.id), this.event).then(function (response) {
         _this2.event = response.data.event;
         alert(response.data.message);
       })["catch"](function (error) {

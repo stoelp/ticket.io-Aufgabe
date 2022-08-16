@@ -24,7 +24,7 @@ export default {
     },
     created() {
         this.axios
-            .get(`http://localhost/api/event/${this.$route.params.id}`)
+            .get(`/api/event/${this.$route.params.id}`)
             .then((response) => {
                 this.event = response.data.event;
             });
@@ -32,10 +32,7 @@ export default {
     methods: {
         updateEvent() {
             this.axios
-                .put(
-                    `http://localhost/api/event/${this.$route.params.id}`,
-                    this.event
-                )
+                .put(`/api/event/${this.$route.params.id}`, this.event)
                 .then((response) => {
                     this.event = response.data.event;
                     alert(response.data.message);

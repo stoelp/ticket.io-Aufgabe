@@ -45,14 +45,14 @@ export default {
         };
     },
     created() {
-        this.axios.get("http://localhost/api/event").then((response) => {
+        this.axios.get("/api/event").then((response) => {
             this.events = response.data.events;
         });
     },
     methods: {
         deleteEvent(id) {
             this.axios
-                .delete(`http://localhost/api/event/${id}`)
+                .delete(`/api/event/${id}`)
                 .then((response) => {
                     let index = this.events
                         .map((event) => event.id)

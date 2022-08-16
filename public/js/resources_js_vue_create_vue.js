@@ -23,7 +23,7 @@ __webpack_require__.r(__webpack_exports__);
     createEvent: function createEvent() {
       var _this = this;
 
-      this.axios.post("http://localhost/api/event", this.event).then(function (response) {
+      this.axios.post("/api/event", this.event).then(function (response) {
         _this.event = response.data.event;
         alert(response.data.message);
       })["catch"](function (error) {
